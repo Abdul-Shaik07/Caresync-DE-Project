@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "PostgreSqlV2Source",
-						"query": "select * from public.hospitals",
+						"query": {
+							"value": "select * from concat(@{pipeline().parameters.schema}, @{pipeline().parameters.table_name})",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00"
 					},
 					"sink": {
@@ -50,13 +53,33 @@
 						"referenceName": "DS_ADLS",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "destination",
-							"directory": "test"
+							"container": {
+								"value": "@pipeline().parameters.container",
+								"type": "Expression"
+							},
+							"directory": {
+								"value": "@pipeline().parameters.directory",
+								"type": "Expression"
+							}
 						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			},
+			"container": {
+				"type": "string"
+			},
+			"directory": {
+				"type": "string"
+			},
+			"schema": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
