@@ -18,7 +18,7 @@
 					"source": {
 						"type": "PostgreSqlV2Source",
 						"query": {
-							"value": "select * from concat(@{pipeline().parameters.schema}, @{pipeline().parameters.table_name})",
+							"value": "select * from public.hospitals",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00"
@@ -53,33 +53,13 @@
 						"referenceName": "DS_ADLS",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": {
-								"value": "@pipeline().parameters.container",
-								"type": "Expression"
-							},
-							"directory": {
-								"value": "@pipeline().parameters.directory",
-								"type": "Expression"
-							}
+							"container": "destination",
+							"directory": "patients"
 						}
 					}
 				]
 			}
 		],
-		"parameters": {
-			"table_name": {
-				"type": "string"
-			},
-			"container": {
-				"type": "string"
-			},
-			"directory": {
-				"type": "string"
-			},
-			"schema": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
